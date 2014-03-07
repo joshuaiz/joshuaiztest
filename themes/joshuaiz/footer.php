@@ -13,15 +13,10 @@ jQuery(document).ready(function($){
 
 
 
+
 jQuery(document).ready(function($){
    $('.entry-content p, h1').widowFix();
 });
-
-// jQuery(document).ready(function($){
-//   if($('.djgigs-table-active').length > 0) {
-//     console.log('Active!');
-//   }
-// });
 
 jQuery(document).ready(function($){
 	$('.djgigs-table-trigger').click(function() {
