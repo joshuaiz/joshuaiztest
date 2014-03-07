@@ -1108,10 +1108,10 @@ This is for the larger monitors and possibly full screen viewers.
 @media only screen and (min-width: 1240px) { /****************************************************************** Site Name:  Author:   Stylesheet: Super Large Monitor Stylesheet  You can add some advanced styles here if you like. This kicks in on larger screens.  *****************************************************************/
   .home #secondary { background: #ACD4DA; color: #fff; padding: 2.2em 1.5em; }
   #secondary { display: block; width: 100%; background: navajowhite; padding: 2.2em; }
-  #secondary .release { height: 64px; }
+  #secondary .release { height: 81px; }
   #secondary .release h4 { margin-bottom: 0; }
   #secondary .release .release-image { width: 48px; margin-right: 8px; }
-  #secondary .release .release-info { font-size: 11px; line-height: 1; margin-left: 54px; }
+  #secondary .release .release-info { font-size: 11px; line-height: 1.1; margin-left: 60px; }
   #secondary img:hover { transform: scale(0.76); -webkit-transform: scale(0.76); -moz-transform: scale(0.76); -o-transform: scale(0.76); -ms-transform: scale(0.76); }
   #secondary .item-group, #secondary .releases { margin-bottom: 1em; }
   #secondary .item-group ul li { line-height: 100%; font-size: 14px; }
