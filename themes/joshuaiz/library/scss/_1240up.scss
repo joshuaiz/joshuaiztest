@@ -25,14 +25,18 @@ on larger screens.
 	background: navajowhite;
 	padding: 2.2em;
 	.release {
-	font-size: 69%;
+	// font-size: 69%;
 	height: 64px;
 	h4 { margin-bottom: 0; }
 	.release-image { 
 		width: 48px;
 		margin-right: 8px; 
 	}
-	.release-info { }
+	.release-info { 
+		font-size: 11px;
+		line-height: 1;
+		margin-left: 54px;
+	}
 	}
 	.release-image {}
 	img:hover {
