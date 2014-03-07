@@ -1,0 +1,74 @@
+/******************************************************************
+Site Name: 
+Author: 
+
+Stylesheet: Super Large Monitor Stylesheet
+
+You can add some advanced styles here if you like. This kicks in
+on larger screens.
+
+******************************************************************/
+
+.home #secondary { 
+	// background: #33C1D5;
+	background: #ACD4DA;
+	// background: #BADEE4;
+	color: #fff;
+	padding: 2.2em 1.5em;
+}
+
+#secondary {
+	display: block;
+	// width: 26.7%;
+	// float: right;
+	width: 100%;
+	background: navajowhite;
+	padding: 2.2em;
+	.release {
+	font-size: 69%;
+	height: 64px;
+	h4 { margin-bottom: 0; }
+	.release-image { 
+		width: 48px;
+		margin-right: 8px; 
+	}
+	.release-info { }
+	}
+	.release-image {}
+	img:hover {
+		transform: scale(0.76);
+		-webkit-transform: scale(0.76);
+		-moz-transform: scale(0.76);
+		-o-transform: scale(0.76);
+		-ms-transform: scale(0.76);
+	}
+	.item-group, .releases {
+		margin-bottom: 1em;
+	}
+	.item-group {
+
+		ul li { 
+			line-height: 100%;
+			font-size: 14px;
+		}
+		// margin-top: 2em;
+		img.download-img {
+			float: left;
+			margin-right: 10px;
+			width: 24px;
+			height: 32px;
+		}
+	}
+}
+
+.single #secondary {
+	display: none;
+}
+
+.blurbs {
+	h3 { margin-top: 0;}
+	.blurb-list li { 
+		font-size: 0.875em;
+		font-weight: 300;
+	}
+}
