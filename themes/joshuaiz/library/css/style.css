@@ -559,6 +559,8 @@ p { font-weight: 400; }
 
 ul { list-style: square inside none; }
 
+ul.nostyle { list-style-type: none; margin-left: 21px; padding: 0; }
+
 img:hover { opacity: 0.8; }
 
 .insert { display: none; }
