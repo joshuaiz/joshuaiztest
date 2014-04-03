@@ -559,7 +559,7 @@ p { font-weight: 400; }
 
 ul { list-style: square inside none; }
 
-ul.nostyle { list-style-type: none; margin-left: 21px; padding: 0; }
+ul.nostyle { list-style-type: none; margin-left: 0; padding: 0; }
 
 img:hover { opacity: 0.8; }
 
