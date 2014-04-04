@@ -244,7 +244,7 @@ CSS3-ONLY TOOLTIPS
 
 [data-tips].bottom-tip:before { border-color: transparent transparent #18ADE7 transparent; margin-top: 0; }
 
-[data-tips].bottom-tip:hover:after, [data-tips].bottom-tip:hover:before { top: 100%; left: 0; }
+[data-tips].bottom-tip:hover:after, [data-tips].bottom-tip:hover:before { top: 100%; left: -40px; }
 
 [data-tips].bottom-tip:hover:before { left: 15px; }
 

@@ -582,7 +582,7 @@ CSS3-ONLY TOOLTIPS
 	[data-tips].bottom-tip:hover:after,
 	[data-tips].bottom-tip:hover:before {
 		top: 100%;
-		left: 0;
+		left: -40px;
 	}
 	[data-tips].bottom-tip:hover:before {
 		left: 15px;
