@@ -23,7 +23,7 @@ body {
 
 #content {
 	margin-left: 300px;
-	overflow: visible;
+	overflow-y: visible !important;
 }
 
 #inner-content {
@@ -411,6 +411,7 @@ SIDEBARS & ASIDES
 #sidebar1 {
 	float: left;
 	width: 300px;
+	// overflow-y: visible !important;
 }
 
 #execphp-2 {

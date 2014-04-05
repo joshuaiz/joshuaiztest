@@ -982,7 +982,7 @@ you can add resource intensive styles.
   /* watch your floating points! different browsers round these differently so check yo' styles */
   /****************************************************************** Site Name: Author:  Stylesheet: Tablet & Small Desktop Stylesheet  Here's where you can start getting into the good stuff. This size will work on iPads, other tablets, and desktops. So you can start working with more styles, background images, and other resources. You'll also notice the grid starts to come into play. Have fun!  *****************************************************************/
   /********************* GENERAL STYLES ********************/
-  #content { margin-left: 300px; overflow: visible; }
+  #content { margin-left: 300px; overflow-y: visible !important; }
   #inner-content { display: flex; display: -moz-flex; display: -webkit-flex; max-width: 99.93%; }
   .home #main { margin: 0 0 0 -1px; }
   .accent { margin: 0 58px; text-align: right; }

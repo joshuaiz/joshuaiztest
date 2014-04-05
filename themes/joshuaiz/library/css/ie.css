@@ -486,7 +486,7 @@ come into play. Have fun!
 /*********************
 GENERAL STYLES
 *********************/
-#content { margin-left: 300px; overflow: visible; }
+#content { margin-left: 300px; overflow-y: visible !important; }
 
 #inner-content { display: flex; display: -moz-flex; display: -webkit-flex; max-width: 99.93%; }
 
