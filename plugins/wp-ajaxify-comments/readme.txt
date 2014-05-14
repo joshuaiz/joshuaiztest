@@ -3,8 +3,8 @@ Contributors: janjonas
 Donate link: http://janjonas.net/donate
 Tags: AJAX, comments, comment, themes, theme
 Requires at least: 3.1.3
-Tested up to: 3.8.1
-Stable tag: 0.21.0
+Tested up to: 3.9.0
+Stable tag: 0.22.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,6 +39,7 @@ Some features of the plugin:
 * Client-side JavaScript API (see FAQ for more details)
 * Auto updating comments if user is "idle"
 * Option to load comments asynchronously with secondary AJAX request if page contains more than a specified number of comments
+* Option to save bandwidth for AJAX responses
 * Debug mode to support troubleshooting
 
 == Screenshots ==
@@ -145,9 +146,18 @@ There are known incompatibilities to the following plugins:
 
 == Changelog ==
 
+= 0.22.0 =
+
+* Minor optimizations
+* Added (expert) option "Optimize AJAX response" to save bandwidth
+* Fixed JavaScript includes for HTTPS
+
 = 0.21.0 =
 
 * Added option 'Disable scroll to anchor'
+* Fixed paging support and async comment loading for pages where comments are closed
+* Fixed compressed JavaScript file
+* Fixed support for URLs with comments anchor if async comment loading is enabled 
 
 = 0.20.0 =
 
@@ -342,8 +352,11 @@ There are known incompatibilities to the following plugins:
 
 == Upgrade Notice ==
 
+= 0.22.0 =
+* Minor optimizations, Added (expert) option "Optimize AJAX response", Bugfix for HTTPS
+
 = 0.21.0 =
-* Added option 'Disable scroll to anchor'
+* Added option 'Disable scroll to anchor', Bugfixes for pages where comments are closed and/or async comment loading is enabled, Fixed compressed JavaScript file
 
 = 0.20.0 =
 * Added support for multiple comment forms per page and support for none default WordPress comment pages

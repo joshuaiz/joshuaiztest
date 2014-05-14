@@ -5,7 +5,7 @@ Plugin URI: http://wordpress.org/extend/plugins/wp-ajaxify-comments/
 Description: WP-Ajaxify-Comments hooks into your current theme and adds AJAX functionality to the comment form.
 Author: Jan Jonas
 Author URI: http://janjonas.net
-Version: 0.20.0
+Version: 0.22.0
 License: GPLv2
 Text Domain: wpac
 */ 
@@ -52,6 +52,7 @@ function wpac_get_config() {
 					'type' => 'boolean',
 					'default' => '0',
 					'label' => __('Enabled plugin', WPAC_DOMAIN),
+					'specialOption' => true,
 				),
 				'debug' => array(
 					'type' => 'boolean',
@@ -364,19 +365,37 @@ function wpac_get_config() {
 					'description' => __('By default JavaScript files are only included on pages where comments are enabled, check to include JavaScript files on every page. Please note: If debug mode is enabled, JavaScript files are included on every pages.', WPAC_DOMAIN),
 					'specialOption' => true,
 				),
+				'optimizeAjaxResponse' => array(
+					'type' => 'boolean',
+					'default' => '0',
+					'label' => __('Optimize AJAX response', WPAC_DOMAIN),
+					'description' => __('Check to remove unnecessary HTML content from AJAX responses to save bandwidth.', WPAC_DOMAIN),
+					'specialOption' => true,
+				),
 			)
 		)
 	);
 }
+
+function wpac_return_optimized_ajax_response() {
+	return (wpac_get_option("optimizeAjaxResponse") && wpac_is_ajax_request());
+}
 	
 function wpac_enqueue_scripts() {
 
-	// Skip if comments and debug mode are disabled and alwaysIncludeScripts option is false
+	if (wpac_return_optimized_ajax_response()) return;
+	
+	// Skip if comments and debug mode are disabled, alwaysIncludeScripts option is false and comments are not loaded asynchronously
 	$debug = wpac_get_option('debug');
-	if (!wpac_comments_enabled() && !wpac_get_option('alwaysIncludeScripts') && !$debug) return;
+	if (
+		!wpac_comments_enabled() 
+		&& !wpac_get_option('alwaysIncludeScripts') 
+		&& !$debug
+		&& !wpac_load_comments_async()
+	) return;
 	
 	$version = wpac_get_version();
-	$jsPath = WP_PLUGIN_URL.'/wp-ajaxify-comments/js/';
+	$jsPath = plugins_url('js/', __FILE__);
 	
 	if ($debug || wpac_get_option('useUncompressedScripts')) {
 		wp_enqueue_script('jsuri', $jsPath.'jsuri-1.1.1.js', array(), $version);
@@ -478,14 +497,34 @@ function wpac_comments_enabled() {
 	}
 }
 
+function wpac_load_comments_async() {
+	$asyncCommentsThreshold = wpac_get_option('asyncCommentsThreshold');
+	if (strlen($asyncCommentsThreshold) == 0) return false;
+	
+	global $post;
+	if (!$post) return false;
+	
+	$commentsCount = (int)get_comments_number($post->ID);
+	return (
+		$commentsCount > 0 &&
+		$asyncCommentsThreshold <= $commentsCount
+	);
+}
+
 function wpac_initialize() {
 
+	if (wpac_return_optimized_ajax_response()) return;
+	
 	$commentsEnabled = wpac_comments_enabled();
 	
 	// Skip JavaScript options output if 
-	// - comments and debug mode are disabled and alwaysIncludeScripts option is false, or
+	// - comments and debug mode are disabled, alwaysIncludeScripts option is false and comments are not loaded asynchronously, or
 	// - request is a WPAC-AJAX request		
-	if (!$commentsEnabled && !wpac_get_option('alwaysIncludeScripts') && !wpac_get_option('debug')) return;
+	if (!$commentsEnabled 
+		&& !wpac_get_option('alwaysIncludeScripts') 
+		&& !wpac_get_option('debug')
+		&& !wpac_load_comments_async()
+	) return;
 	if (wpac_is_ajax_request()) return;
 	
 	echo '<script type="text/javascript">';
@@ -587,6 +626,11 @@ function wpac_comment_post_redirect($location)
 	return $location;
 }
 add_action('comment_post_redirect', 'wpac_comment_post_redirect');
+
+function wpac_the_content($content) {
+	return wpac_return_optimized_ajax_response() ? "" : $content;
+}
+add_filter('the_content', 'wpac_the_content', PHP_INT_MAX);
 
 function wpac_option_page() {
 	if (!current_user_can('manage_options'))  {
@@ -747,7 +791,8 @@ function wpac_admin_menu() {
 	add_options_page(WPAC_PLUGIN_NAME, WPAC_PLUGIN_NAME, 'manage_options', WPAC_PLUGIN_NAME, 'wpac_option_page');
 }
 
-function comments_query_filter($query) {
+function wpac_comments_query_filter($query) {
+
 	// No comment filtering if request is a fallback or WPAC-AJAX request  
 	if ((isset($_REQUEST['WPACFallback']) && $_REQUEST['WPACFallback']) || wpac_is_ajax_request()) return $query;
 	
@@ -783,7 +828,7 @@ function wpac_filter_gettext($translation, $text, $domain) {
 
 if (!is_admin() && !wpac_is_login_page()) {
 	if (wpac_get_option('enable')) {
-		add_filter('comments_array', 'comments_query_filter');
+		add_filter('comments_array', 'wpac_comments_query_filter');
 		add_action('wp_head', 'wpac_initialize');
 		add_action('wp_enqueue_scripts', 'wpac_enqueue_scripts');
 		add_filter('gettext', 'wpac_filter_gettext', 20, 3);
