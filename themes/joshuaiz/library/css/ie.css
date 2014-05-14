@@ -510,6 +510,8 @@ GENERAL STYLES
 .next-post .related h6 { margin: 0; background: #6D9DB6; padding: 3px 7px; text-transform: uppercase; color: #fff; }
 .next-post .related .inner-section { padding: 2em; }
 
+.event-description { margin-left: 280px; }
+
 /********************
 WORDPRESS BODY CLASSES
 style a page via class
@@ -535,8 +537,6 @@ style a page via class
 /* no results search page */
 /* individual paged search (i.e. body.search-paged-3) */
 /* 404 page */
-.single .event-description { margin-left: 280px; }
-
 /* single post page */
 /* individual post page by id (i.e. body.postid-73) */
 /* individual paged single (i.e. body.single-paged-3) */

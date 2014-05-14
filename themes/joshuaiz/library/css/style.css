@@ -998,6 +998,7 @@ you can add resource intensive styles.
   .next-post .related { width: 48%; background: #f9f9f9; box-shadow: 0px 1px 1px #ccc; margin: 0 0 2.2em; }
   .next-post .related h6 { margin: 0; background: #6D9DB6; padding: 3px 7px; text-transform: uppercase; color: #fff; }
   .next-post .related .inner-section { padding: 2em; }
+  .event-description { margin-left: 280px; }
   /******************** WORDPRESS BODY CLASSES style a page via class *******************/
   /*	[added by JM] 	I like having these body classes at screens 768px and above. 	For the most part, the default page settings below this size 	in Bones "just work". If you concentrate your page styles here, 	you keep the base (Mobile) stylesheet small. */
   /* for sites that are read right to left (i.e. hebrew) */
@@ -1014,7 +1015,6 @@ you can add resource intensive styles.
   /* no results search page */
   /* individual paged search (i.e. body.search-paged-3) */
   /* 404 page */
-  .single .event-description { margin-left: 280px; }
   /* single post page */
   /* individual post page by id (i.e. body.postid-73) */
   /* individual paged single (i.e. body.single-paged-3) */
