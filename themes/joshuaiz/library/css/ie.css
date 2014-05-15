@@ -510,7 +510,7 @@ GENERAL STYLES
 .next-post .related h6 { margin: 0; background: #6D9DB6; padding: 3px 7px; text-transform: uppercase; color: #fff; }
 .next-post .related .inner-section { padding: 2em; }
 
-.event-description { margin-left: 280px; }
+.event-description { margin-left: 255px; }
 
 /********************
 WORDPRESS BODY CLASSES

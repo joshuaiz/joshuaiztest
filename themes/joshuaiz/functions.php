@@ -372,4 +372,9 @@ function wab_blurb_cpt() {
 // Hook into the 'init' action
 add_action( 'init', 'wab_blurb_cpt', 0 );
 
+add_action( 'wp_enqueue_scripts', 'load_dashicons_front_end' );
+function load_dashicons_front_end() {
+wp_enqueue_style( 'dashicons' );
+}
+
 ?>

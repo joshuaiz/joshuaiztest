@@ -89,6 +89,21 @@ blockquote {
 	&.tip { border-left: 4px solid #99E28B; }
 }
 
+.events-description {
+	h1 { display: inline-block; }
+}
+
+.dashicons-heart:before {
+	content: "\f487";
+	display: inline-block;
+	color: #C00;
+	-webkit-font-smoothing: antialiased;
+	font: normal 36px/1 'dashicons';
+	position: relative;
+	top: 4px;
+	left: -3px;
+}
+
 /********************
 WORDPRESS BODY CLASSES
 style a page via class
