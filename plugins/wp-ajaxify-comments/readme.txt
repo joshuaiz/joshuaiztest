@@ -3,8 +3,8 @@ Contributors: janjonas
 Donate link: http://janjonas.net/donate
 Tags: AJAX, comments, comment, themes, theme
 Requires at least: 3.1.3
-Tested up to: 3.9.0
-Stable tag: 0.22.0
+Tested up to: 3.9.1
+Stable tag: 0.23.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,7 +17,7 @@ Moreover this plugin includes an option to automatically refresh the comments on
 
 **Live demo:** You can try out a live demo in <a target="_blank" href="http://blog.janjonas.net/2012-06-08/wordpress-ajax-comment-wp-ajaxify-comments-plugin">the blog post I've written for the initial release of the plugin</a>. 
 
-Since the plugin hooks (on client-side) into the theme to intercept the comment form submit process, and to add new comments without reloading the page, the plugin needs to access the DOM nodes using (jQuery) selectors. The plugin comes with default values for these selectors that were successfully tested with WordPress' default themes "Twenty Ten", "Twenty Eleven", "Twenty Twelve". 
+Since the plugin hooks (on client-side) into the theme to intercept the comment form submit process, and to add new comments without reloading the page, the plugin needs to access the DOM nodes using (jQuery) selectors. The plugin comes with default values for these selectors that were successfully tested with WordPress' default themes "Twenty Ten", "Twenty Eleven", "Twenty Twelve", "Twenty Thirteen", "Twenty Fourteen". 
 
 Summarized, the WP-Ajaxify-Comments plugin hooks into your theme and improves the usability of the comment form by validating and adding comments without the need of complete page reloads.
 
@@ -145,6 +145,19 @@ There are known incompatibilities to the following plugins:
 * Jetpack with activated "Jetpack Comments" 
 
 == Changelog ==
+
+= 0.23.1 =
+
+* Changed order of links in plugin overview
+* Make sure WPAC._Options is always initialized
+* Bugfix for comment paging links
+
+= 0.23.0 =
+
+* Added (expert) option "Place scripts in footer"
+* Added option "Comment links selector" to prevent (complete) page loads for comment links on pages if "Break comments into pages [...]" is enabled
+* Bugfix for "Users must be registered and logged in to comment"
+* Fixed PHP Notice for PHP < 5.4.0
 
 = 0.22.0 =
 
@@ -351,6 +364,12 @@ There are known incompatibilities to the following plugins:
 * Initial release
 
 == Upgrade Notice ==
+
+= 0.23.1 =
+* Changed order of links in plugin overview, Make sure WPAC._Options is always initialized, Bugfix for comment paging links
+
+= 0.23.0 =
+* Added (expert) option "Place scripts in footer", Bugfix for "Users must be registered and logged in to comment", Added option "Comment links selector", Fixed PHP Notice for PHP < 5.4.0
 
 = 0.22.0 =
 * Minor optimizations, Added (expert) option "Optimize AJAX response", Bugfix for HTTPS

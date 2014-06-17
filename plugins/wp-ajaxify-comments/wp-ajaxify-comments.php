@@ -5,7 +5,7 @@ Plugin URI: http://wordpress.org/extend/plugins/wp-ajaxify-comments/
 Description: WP-Ajaxify-Comments hooks into your current theme and adds AJAX functionality to the comment form.
 Author: Jan Jonas
 Author URI: http://janjonas.net
-Version: 0.22.0
+Version: 0.23.1
 License: GPLv2
 Text Domain: wpac
 */ 
@@ -78,6 +78,11 @@ function wpac_get_config() {
 						'type' => 'string',
 						'default' => '#comments [class^=\'nav-\'] a',
 						'label' => __('Comment paging links selector', WPAC_DOMAIN),
+				),
+				'selectorCommentLinks' => array(
+						'type' => 'string',
+						'default' => '#comments a[href*="/comment-page-"]',
+						'label' => __('Comment links selector', WPAC_DOMAIN),
 				),
 				'selectorRespondContainer' => array(
 					'type' => 'string',
@@ -365,6 +370,13 @@ function wpac_get_config() {
 					'description' => __('By default JavaScript files are only included on pages where comments are enabled, check to include JavaScript files on every page. Please note: If debug mode is enabled, JavaScript files are included on every pages.', WPAC_DOMAIN),
 					'specialOption' => true,
 				),
+				'placeScriptsInFooter' => array(
+					'type' => 'boolean',
+					'default' => '0',
+					'label' => __('Place scripts in footer', WPAC_DOMAIN),
+					'description' => __('Enable to place JavaScript files before the </body> tag.', WPAC_DOMAIN),
+					'specialOption' => true,
+				),
 				'optimizeAjaxResponse' => array(
 					'type' => 'boolean',
 					'default' => '0',
@@ -388,23 +400,24 @@ function wpac_enqueue_scripts() {
 	// Skip if comments and debug mode are disabled, alwaysIncludeScripts option is false and comments are not loaded asynchronously
 	$debug = wpac_get_option('debug');
 	if (
-		!wpac_comments_enabled() 
-		&& !wpac_get_option('alwaysIncludeScripts') 
+		!wpac_get_option('alwaysIncludeScripts') 
 		&& !$debug
 		&& !wpac_load_comments_async()
+		&& !(wpac_comments_enabled() || wpac_get_comments_count() > 0) 
 	) return;
 	
 	$version = wpac_get_version();
 	$jsPath = plugins_url('js/', __FILE__);
+	$inFooter = wpac_get_option("placeScriptsInFooter");
 	
 	if ($debug || wpac_get_option('useUncompressedScripts')) {
-		wp_enqueue_script('jsuri', $jsPath.'jsuri-1.1.1.js', array(), $version);
-		wp_enqueue_script('jQueryBlockUi', $jsPath.'jquery.blockUI.js', array('jquery'), $version);
-		wp_enqueue_script('jQueryIdleTimer', $jsPath.'idle-timer.js', array('jquery'), $version);
-		wp_enqueue_script('waypoints', $jsPath.'waypoints.js', array('jquery'), $version);
-		wp_enqueue_script('wpAjaxifyComments', $jsPath.'wp-ajaxify-comments.js', array('jquery', 'jQueryBlockUi', 'jsuri', 'jQueryIdleTimer', 'waypoints'), $version);
+		wp_enqueue_script('jsuri', $jsPath.'jsuri-1.1.1.js', array(), $version, $inFooter);
+		wp_enqueue_script('jQueryBlockUi', $jsPath.'jquery.blockUI.js', array('jquery'), $version, $inFooter);
+		wp_enqueue_script('jQueryIdleTimer', $jsPath.'idle-timer.js', array('jquery'), $version, $inFooter);
+		wp_enqueue_script('waypoints', $jsPath.'waypoints.js', array('jquery'), $version, $inFooter);
+		wp_enqueue_script('wpAjaxifyComments', $jsPath.'wp-ajaxify-comments.js', array('jquery', 'jQueryBlockUi', 'jsuri', 'jQueryIdleTimer', 'waypoints'), $version, $inFooter);
 	} else {
-		wp_enqueue_script('wpAjaxifyComments', $jsPath.'wp-ajaxify-comments.min.js', array('jquery'), $version);
+		wp_enqueue_script('wpAjaxifyComments', $jsPath.'wp-ajaxify-comments.min.js', array('jquery'), $version, $inFooter);
 	}
 }
 
@@ -493,18 +506,22 @@ function wpac_comments_enabled() {
 		return preg_match($commentPagesUrlRegex, wpac_get_page_url()) > 0;
 	} else {
 		global $post;
-		return (is_page() || is_single()) && comments_open($post->ID);
+		return (is_page() || is_single()) && comments_open($post->ID) && (!get_option('comment_registration') || is_user_logged_in());
 	}
+}
+
+function wpac_get_comments_count() {
+	global $post;
+	if (!$post) return 0;
+	
+	return (int)get_comments_number($post->ID);
 }
 
 function wpac_load_comments_async() {
 	$asyncCommentsThreshold = wpac_get_option('asyncCommentsThreshold');
 	if (strlen($asyncCommentsThreshold) == 0) return false;
 	
-	global $post;
-	if (!$post) return false;
-	
-	$commentsCount = (int)get_comments_number($post->ID);
+	$commentsCount = wpac_get_comments_count();
 	return (
 		$commentsCount > 0 &&
 		$asyncCommentsThreshold <= $commentsCount
@@ -520,10 +537,11 @@ function wpac_initialize() {
 	// Skip JavaScript options output if 
 	// - comments and debug mode are disabled, alwaysIncludeScripts option is false and comments are not loaded asynchronously, or
 	// - request is a WPAC-AJAX request		
-	if (!$commentsEnabled 
-		&& !wpac_get_option('alwaysIncludeScripts') 
+	if (  
+		!wpac_get_option('alwaysIncludeScripts') 
 		&& !wpac_get_option('debug')
 		&& !wpac_load_comments_async()
+		&& !($commentsEnabled || wpac_get_comments_count() > 0)
 	) return;
 	if (wpac_is_ajax_request()) return;
 	
@@ -570,7 +588,7 @@ function wpac_add_settings_link($links, $file) {
 	if (!$this_plugin) $this_plugin = plugin_basename(__FILE__);
 	if ($file == $this_plugin){
 		$settings_link = '<a href="'.WPAC_SETTINGS_URL.'">Settings</a>';
-		array_unshift($links, $settings_link);
+		$links[] = $settings_link;
 	}
 	return $links;
 }
@@ -727,7 +745,8 @@ function wpac_option_page() {
 						}
 						echo '</select>';
 					} else {
-						$escapedValue = htmlentities($value, ENT_COMPAT | ENT_HTML401, 'UTF-8');
+						$flags = defined('ENT_HTML401') ? ENT_COMPAT | ENT_HTML401 : ENT_COMPAT; // ENT_HTML401 was added in PHP 5.4.0
+						$escapedValue = htmlentities($value, $flags, 'UTF-8');
 						if ($option['type'] == 'multiline') {
 							echo '<textarea name="'.$name.'" id="'.$optionName.'" rows="5" cols="40" style="width: 300px; color: '.$color.'">'.$escapedValue.'</textarea>';
 						} else {
@@ -735,7 +754,7 @@ function wpac_option_page() {
 						} 
 						if (isset($option['default']) && $option['default']) echo '<br/>'.sprintf(__('Leave empty for default value %s', WPAC_DOMAIN), '<em>'.$option['default'].'</em>');
 					}
-					if (isset($option['description']) && $option['description']) echo '<br/><em style="width:300px; display: inline-block">'.$option['description'].'</em>';
+					if (isset($option['description']) && $option['description']) echo '<br/><em style="width:300px; display: inline-block">'.htmlspecialchars($option['description']).'</em>';
 					echo '</td></tr>';
 				}
 				$section++;
