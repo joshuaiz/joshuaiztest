@@ -233,7 +233,7 @@ add_filter( 'body_class', 'osseous_body_class' );
 if ( ! function_exists( 'mv_browser_body_class' ) )
 {
     function browser_body_class( $classes ) {
-        global $is_lynx, $is_gecko, $is_IE, $is_opera, $is_NS4, $is_safari, $is_chrome, $is_iphone;
+        global $is_lynx, $is_gecko, $is_IE, $is_opera, $is_NS4, $is_safari, $is_chrome, $is_iphone, $is_ipad, $is_android;
         if( $is_lynx ) $classes[] = 'lynx';
         elseif( $is_gecko ) $classes[] = 'gecko';
         elseif( $is_opera ) $classes[] = 'opera';
