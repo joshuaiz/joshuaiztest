@@ -3,7 +3,7 @@
 Plugin Name: Crayon Syntax Highlighter
 Plugin URI: https://github.com/aramkocharyan/crayon-syntax-highlighter
 Description: Supports multiple languages, themes, highlighting from a URL, local file or post text.
-Version: 2.6.3
+Version: 2.6.7
 Author: Aram Kocharyan
 Author URI: http://aramk.com/
 Text Domain: crayon-syntax-highlighter
@@ -23,15 +23,15 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-require_once ('global.php');
-require_once (CRAYON_HIGHLIGHTER_PHP);
+require_once('global.php');
+require_once(CRAYON_HIGHLIGHTER_PHP);
 if (CRAYON_TAG_EDITOR) {
-    require_once (CRAYON_TAG_EDITOR_PHP);
+    require_once(CRAYON_TAG_EDITOR_PHP);
 }
 if (CRAYON_THEME_EDITOR) {
-    require_once (CRAYON_THEME_EDITOR_PHP);
+    require_once(CRAYON_THEME_EDITOR_PHP);
 }
-require_once ('crayon_settings_wp.class.php');
+require_once('crayon_settings_wp.class.php');
 
 if (defined('ABSPATH')) {
     // Used to get plugin version info
@@ -40,6 +40,7 @@ if (defined('ABSPATH')) {
 }
 
 /* The plugin class that manages all other classes and integrates Crayon with WP */
+
 class CrayonWP {
     // Properties and Constants ===============================================
 
@@ -288,8 +289,6 @@ class CrayonWP {
             $wp_content = preg_replace_callback('#(?<!\$)\[\s*plain\s*\](.*?)\[\s*/\s*plain\s*\]#msi', 'CrayonFormatter::plain_code', $wp_content);
         }
 
-
-
         // Add IDs to the Crayons
         CrayonLog::debug('capture adding id ' . $wp_id . ' , now has len ' . strlen($wp_content));
         $wp_content = preg_replace_callback(self::REGEX_ID, 'CrayonWP::add_crayon_id', $wp_content);
@@ -345,6 +344,11 @@ class CrayonWP {
                     for ($j = 0; $j < count($att_matches[1]); $j++) {
                         $atts_array[trim(strtolower($att_matches[1][$j]))] = trim($att_matches[3][$j]);
                     }
+                }
+
+                if (@$atts_array[CrayonSettings::IGNORE]) {
+                    // TODO(aramk) Revert to the original content.
+                    continue;
                 }
 
                 // Capture theme
@@ -518,7 +522,7 @@ class CrayonWP {
     }
 
     private static function add_crayon_id($content) {
-        $uid = $content[0] . '-' . str_replace('.','',uniqid('',true));
+        $uid = $content[0] . '-' . str_replace('.', '', uniqid('', true));
         CrayonLog::debug('add_crayon_id ' . $uid);
         return $uid;
     }
@@ -755,7 +759,7 @@ class CrayonWP {
         return $the_excerpt . ' ';
     }
 
-    // Refactored, used to capture pre and span tags which have settings in class attribute
+    // Used to capture pre and span tags which have settings in class attribute
     public static function class_tag($matches) {
         // If class exists, atts is not captured
         $pre_class = $matches[1];
@@ -775,6 +779,10 @@ class CrayonWP {
         }
 
         if (!empty($class)) {
+            if (preg_match('#\bignore\s*:\s*true#', $class)) {
+                // Prevent any changes if ignoring the tag.
+                return $matches[0];
+            }
             // crayon-inline is turned into inline="1"
             $class = preg_replace('#' . self::REGEX_INLINE_CLASS . '#mi', 'inline="1"', $class);
             // "setting[:_]value" style settings in the class attribute
@@ -880,6 +888,14 @@ class CrayonWP {
 
     public static function save_post($update_id, $post) {
         self::refresh_post($post);
+    }
+
+    public static function filter_post_data($data, $postarr) {
+        // Remove the selected CSS that may be present from the tag editor.
+        CrayonTagEditorWP::init_settings();
+        $css_selected = CrayonTagEditorWP::$settings['css_selected'];
+        $data['post_content'] = preg_replace("#(class\s*=\s*(\\\\[\"'])[^\"']*)$css_selected([^\"']*\\2)#msi", '$1$3', $data['post_content']);
+        return $data;
     }
 
     public static function refresh_post($post, $refresh_legacy = TRUE, $save = TRUE) {
@@ -1304,6 +1320,7 @@ if (defined('ABSPATH')) {
         // For marking a post as containing a Crayon
         add_action('update_post', 'CrayonWP::save_post', 10, 2);
         add_action('save_post', 'CrayonWP::save_post', 10, 2);
+        add_filter('wp_insert_post_data', 'CrayonWP::filter_post_data', '99', 2);
     }
     register_activation_hook(__FILE__, 'CrayonWP::install');
     register_deactivation_hook(__FILE__, 'CrayonWP::uninstall');

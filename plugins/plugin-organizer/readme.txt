@@ -3,8 +3,8 @@ Contributors: foomagoo
 Donate link: 
 Tags: plugin organizer, load order, organize plugins, plugin order, sort plugin, group plugin, disable plugins by post, disable plugins by page, disable plugins by custom post type, turn off plugins for post, turn off plugins for page, turn off plugins for custom post type
 Requires at least: 3.8
-Tested up to: 3.9.1
-Stable tag: 5.2
+Tested up to: 4.0
+Stable tag: 5.6.2
 
 
 This plugin allows you to do the following:
@@ -63,6 +63,35 @@ A.
 4. Page edit screen.
 
 == Changelog ==
+
+= 5.6.2 =
+Added delimiter to preg_quote
+
+= 5.6.1 =
+Changed array creation to not use shorthand as that created problems for some users.
+
+= 5.6 = 
+Removed a print_r statement that had been left in the code from testing.
+
+= 5.5 =
+Fixed admin menu item order and default page under Plugin Organizer.
+Code cleanup.  $wpdb was globalized in several function but no longer used.
+Fixed a problem with trailing slash correction for files.
+Fixed a problem with MU plugin not correctly applying to admin files.
+Changed jQuery functionality to submit data more efficiently.  No longer has to reset the form data on every submission.
+Added code to retrieve the plugins from a parent so that you can see if a parent is affecting a post and what plugins it is disabling on the edit screen.
+Removed the check to see if selective plugin loading is enabled before adding the meta box.  Now you will just recieve an error if you have selective plugin loading disabled.
+
+= 5.4 =
+Changed the function used from strpos to stripos for mobile browser string matching.
+Fixed an issue where site freezes during upgrade.
+Changed from using HTTP_HOST to the wordpress url for trailing slash correction.
+
+= 5.3 =
+Added css class for network activated plugins on the plugins page.
+Moved all of the menus under the Plugin Organizer menu item.
+Fixed bug where a trailing slash is added to the permalink when it is referencing a file.
+Added the admin css file to the plugins admin page.
 
 = 5.2 =
 Added ability to edit the plugin group names.
@@ -382,5 +411,5 @@ Initial version.
 
 == Upgrade Notice ==
 
-= 5.2 =
-Added ability to edit the plugin group names.
+= 5.6.2 =
+Added delimiter to preg_quote

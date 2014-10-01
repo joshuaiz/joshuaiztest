@@ -5,7 +5,7 @@ Plugin URI: http://wordpress.org/extend/plugins/wp-ajaxify-comments/
 Description: WP-Ajaxify-Comments hooks into your current theme and adds AJAX functionality to the comment form.
 Author: Jan Jonas
 Author URI: http://janjonas.net
-Version: 0.23.1
+Version: 0.25.0
 License: GPLv2
 Text Domain: wpac
 */ 
@@ -323,14 +323,14 @@ function wpac_get_config() {
 					'default' => '',
 					'label' => sprintf(__("'%s' callback", WPAC_DOMAIN), 'OnBeforeUpdateComments'),
 					'specialOption' => true,
-					'description' => __('Parameter: newDom (jQuery DOM element)', WPAC_DOMAIN)
+					'description' => __('Parameters: newDom (jQuery DOM element), commentUrl (string)', WPAC_DOMAIN)
 				),
 				'callbackOnAfterUpdateComments' => array(
 					'type' => 'multiline',
 					'default' => '',
 					'label' => sprintf(__("'%s' callback", WPAC_DOMAIN), 'OnAfterUpdateComments'),
 					'specialOption' => true,
-					'description' => __('Parameter: newDom (jQuery DOM element)', WPAC_DOMAIN)
+					'description' => __('Parameters: newDom (jQuery DOM element), commentUrl (string)', WPAC_DOMAIN)
 				),
 				'asyncCommentsThreshold' => array(
 					'type' => 'int',
@@ -545,7 +545,7 @@ function wpac_initialize() {
 	) return;
 	if (wpac_is_ajax_request()) return;
 	
-	echo '<script type="text/javascript">';
+	echo '<script type="text/javascript">/* <![CDATA[ */';
 
 	echo 'if (!window["WPAC"]) var WPAC = {};';
 	
@@ -571,12 +571,12 @@ function wpac_initialize() {
 	// Callbacks
 	echo 'WPAC._Callbacks = {';
 	echo '"beforeSelectElements": function(dom) {'.wpac_get_option('callbackOnBeforeSelectElements').'},';
-	echo '"beforeUpdateComments": function(newDom) {'.wpac_get_option('callbackOnBeforeUpdateComments').'},';
-	echo '"afterUpdateComments": function(newDom) {'.wpac_get_option('callbackOnAfterUpdateComments').'},';
+	echo '"beforeUpdateComments": function(newDom, commentUrl) {'.wpac_get_option('callbackOnBeforeUpdateComments').'},';
+	echo '"afterUpdateComments": function(newDom, commentUrl) {'.wpac_get_option('callbackOnAfterUpdateComments').'},';
 	echo '"beforeSubmitComment": function() {'.wpac_get_option('callbackOnBeforeSubmitComment').'}';
 	echo '};';
 	
-	echo '</script>';	
+	echo '/* ]]> */</script>';	
 }
 
 function wpac_is_login_page() {

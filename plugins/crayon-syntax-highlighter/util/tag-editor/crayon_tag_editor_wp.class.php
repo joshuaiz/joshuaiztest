@@ -49,9 +49,10 @@ class CrayonTagEditorWP {
                 'hl_css' => '#crayon-highlight',
                 'switch_html' => '#content-html',
                 'switch_tmce' => '#content-tmce',
+                'tinymce_button_generic' => '.mce-btn',
                 'tinymce_button' => 'a.mce_crayon_tinymce,.mce-i-crayon_tinymce',
                 'tinymce_button_unique' => 'mce_crayon_tinymce',
-                'tinymce_highlight' => 'mce_crayon_tinymce_highlight',
+                'tinymce_highlight' => 'mce-active',
                 'submit_css' => '#crayon-te-ok',
                 'cancel_css' => '#crayon-te-cancel',
                 'content_css' => '#crayon-te-content',
@@ -121,7 +122,7 @@ class CrayonTagEditorWP {
         return $plugin_array;
     }
 
-    // The remaining functions are for priting
+    // The remaining functions are for displayed output.
 
     public static function select_resource($id, $resources, $current, $set_class = TRUE) {
         $id = CrayonSettings::PREFIX . $id;

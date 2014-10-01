@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=AW99E
 License: GPLv2 or later
 Tags: syntax highlighter, syntax, highlighter, highlighting, crayon, code highlighter, bbpress
 Requires at least: 3.0
-Tested up to: 3.9.1
+Tested up to: 4.0.0
 Stable tag: trunk
 
 Syntax Highlighter supporting multiple languages, themes, fonts, highlighting from a URL, local file or post text.
@@ -73,6 +73,7 @@ Languages are defined in language files using Regular Expressions to capture ele
 See the <a href="http://aramk.com/blog/2011/09/23/crayon-language-file-specification/" target="_blank">Crayon Language File Specification</a> to learn how to make your own.
 
 * Default Language (one size fits all, highlights generic code)
+* C1 (thanks to <a href="http://oparin.info/" target="_blank">Oparin Pavel</a>)
 * ABAP
 * ActionScript
 * AmigaDOS (thanks to <a href="http://www.amigalog.com/" target="_blank">amigalog.com</a>)
@@ -115,6 +116,7 @@ See the <a href="http://aramk.com/blog/2011/09/23/crayon-language-file-specifica
 * Rust (thanks to <a href="https://github.com/Stibbons" target="_blank">Stibbons</a>)
 * Scheme (thanks to <a href="https://github.com/harry75369" target="_blank">Harry75369</a>)
 * Shell (Unix)
+* Swift (thanks to <a href="https://github.com/weyhan" target="_blank">weyhan</a>)
 * Transact-SQL
 * TeX
 * Vim
@@ -127,22 +129,25 @@ See the <a href="http://aramk.com/blog/2011/09/23/crayon-language-file-specifica
 **International Languages**
 
 * Arabic (thanks to <a href="http://djennadhamza.eb2a.com/" target="_blank">Djennad Hamza</a>)
-* Chinese (Simplified, thanks to <a href="http://smerpup.com/" target="_blank">Dezhi Liu</a> & <a href="http://neverno.me/" target="_blank">Jash Yin</a>)
+* Chinese Simplified (thanks to <a href="http://smerpup.com/" target="_blank">Dezhi Liu</a> & <a href="http://neverno.me/" target="_blank">Jash Yin</a>)
+* Chinese Traditional (thanks to <a href="http://www.arefly.com/" target="_blank">Arefly</a>)
 * Dutch (thanks to <a href="https://twitter.com/RobinRoelofsen" target="_blank">Robin Roelofsen</a> & <a href="https://twitter.com/#!/chilionsnoek" target="_blank">Chilion Snoek</a>)
+* Finnish (thanks to <a href="https://github.com/vahalan" target="_blank">vahalan</a>)
 * French (thanks to <a href="http://tech.dupeu.pl" target="_blank">Victor Felder</a>)
 * German (thanks to <a href="http://www.technologyblog.de/" target="_blank">Stephan Knau&szlig;</a>)
 * Italian (thanks to <a href="http://www.federicobellucci.net/" target="_blank">Federico Bellucci</a>)
 * Japanese (thanks to <a href="https://twitter.com/#!/west_323" target="_blank">@west_323</a>)
 * Korean (thanks to <a href="https://github.com/dokenzy" target="_blank">dokenzy</a>)
 * Lithuanian (thanks to Vincent G)
+* Persian (thanks to MahdiY)
 * Polish (thanks to <a href="https://github.com/toszcze" target="_blank">Bartosz Romanowski</a>)
 * Portuguese (thanks to <a href="http://www.adonai.eti.br" target="_blank">Adonai S. Canez</a>)
+* Russian (thanks to <a href="http://simplelib.com" target="_blank">Minimus</a> & <a href="http://atlocal.net/" target="_blank">Di_Skyer</a>)
 * Slovak (thanks to Branco, <a href="https://twitter.com/#!/webhostgeeks" target="_blank">webhostgeeks/</a>)
 * Slovenian (thanks to Jan Su&#353;nik, <a href="http://jodlajodla.si/" target="_blank">http://jodlajodla.si/</a>)
 * Spanish (thanks to <a href="http://www.hbravo.com/" target="_blank">Hermann Bravo</a>)
-* Russian (thanks to <a href="http://simplelib.com" target="_blank">Minimus</a> & <a href="http://atlocal.net/" target="_blank">Di_Skyer</a>)
 * Turkish (thanks to <a href="http://hakanertr.wordpress.com" target="_blank">Hakan</a>)
-* Ukrainian (thanks to Michael Yunat)
+* Ukrainian (thanks to <a href="http://getvoip.com/blog" target="_blank">Michael Yunat</a>)
 * Help from translators at improving/adding to this list greatly appreciated!
 
 **Articles**
@@ -187,16 +192,16 @@ A handful of articles from others written about Crayon, thanks guys!
 * http://www.wplover.com/2155/crayon-syntax-highlighter-plugin/
 * http://www.htmlandphp.com/scripts/crayon-syntax-highlighter.html
 
-**Future Development**
-
-* Performance, minimised resources
-* Theme Editor
-* Integrated commenting
-
 **Donations**
 
 Thanks to all those who donate to the project:
 
+* Raffael Vogler, Germany
+* Erdal Cicek, Turkey
+* Cloud-VPS, Poland
+* Łukasz Bereza, Poland
+* Laurence Scotford, UK
+* Goretity Árpád László, (http://h2co3.org/blog), Hungary
 * AdsProvider, USA
 * Alicia Ramirez, (http://aliciaramirez.com/), Canada
 * William Eisert, USA
@@ -272,6 +277,43 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 5. Theme Editor.
 
 == Changelog ==
+
+= 2.6.7 =
+* ADDED:
+    * Traditional Chinese translation (thanks to <a href="http://www.arefly.com/" target="_blank">Arefly</a>)
+    * Converting tabs to spaces setting is now off by default. The original tab size setting is used with the tab-size CSS style instead to preserve tabs in the source.
+    * "ignore:true" setting in the class of pre tags will prevent that code block from being parsed by Crayon.
+    * Obsidian theme thanks to <a href="http://rakcheev.ru/" target="_blank">Rakcheev Artem</a>.
+    * Visual Assist theme thanks to Brady Reuter.
+* FIXED:
+    * Styling for (?) buttons on settings page.
+
+= 2.6.6 =
+* ADDED:
+    * Persian translation (thanks to MahdiY).
+    * C1 language and themes (thanks to Oparin Pavel).
+* FIXED:
+    * Improved Chinese translation and Go language statements (thanks to <a href="https://github.com/sumhat" target="_blank">sumhat</a>)
+    * Theme editor failing to load.
+    * Updated to WP 4.0
+
+= 2.6.5 =
+* ADDED:
+    * Shell-default theme.
+* FIXED:
+    * Added missing SVN files.
+
+= 2.6.4 =
+* ADDED:
+    * Swift language (thanks to <a href="https://github.com/weyhan" target="_blank">weyhan</a>).
+    * Light Abite theme.
+    * Missing gettext for in settings page.
+    * Finnish translation (thanks to <a href="https://github.com/vahalan" target="_blank">vahalan</a>).
+* FIXED:
+    * Issue causing other shortcode tags (e.g. captions) to be removed on post save.
+    * Improved tag editor button style when active to use the default for TinyMCE.
+    * Style missing for visual editor if switching from text mode after a refresh.
+    * String matching fixes thanks to <a href="https://github.com/mcmanigle" target="_blank">mcmanigle</a>
 
 = 2.6.3 =
 * FIXED:

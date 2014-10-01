@@ -4,7 +4,7 @@ Donate link: http://janjonas.net/donate
 Tags: AJAX, comments, comment, themes, theme
 Requires at least: 3.1.3
 Tested up to: 3.9.1
-Stable tag: 0.23.1
+Stable tag: 0.25.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -146,6 +146,20 @@ There are known incompatibilities to the following plugins:
 
 == Changelog ==
 
+= 0.25.0 =
+
+* Loading comments now updates page title (thanks to Jincheng Shan)
+* OnBeforeSubmitComment callback is now called before submitUrl is extracted
+
+= 0.24.1 =
+
+* Updated localization for zh-CN (thanks to Jincheng Shan)
+* Added CDATA tag for inline JavaScript (thanks to Jincheng Shan)
+
+= 0.24.0 =
+
+* Added parameter commentUrl to callbacks OnBeforeUpdateComments and OnAfterUpdateComments
+
 = 0.23.1 =
 
 * Changed order of links in plugin overview
@@ -178,7 +192,7 @@ There are known incompatibilities to the following plugins:
 * Added option 'Comment pages URL regex' to support none default WordPress comment pages 
 
 = 0.19.0 =
-* Added parameter newDom to callbacks onBeforeUpdateComments and onAfterUpdateComments
+* Added parameter newDom to callbacks OnBeforeUpdateComments and OnAfterUpdateComments
 * Fixed JavaScript error "TypeError: WPAC._Options is undefined" (thanks to Suzanne Ahjira)
 * Fixed JavaScript error in Internet Explorer (thanks to timhengeveld)
 
@@ -365,6 +379,12 @@ There are known incompatibilities to the following plugins:
 
 == Upgrade Notice ==
 
+= 0.24.1 =
+* Updated localization for zh-CN
+
+= 0.24.0 =
+* Added parameter commentUrl to callbacks OnBeforeUpdateComments and OnAfterUpdateComments
+
 = 0.23.1 =
 * Changed order of links in plugin overview, Make sure WPAC._Options is always initialized, Bugfix for comment paging links
 
@@ -381,7 +401,7 @@ There are known incompatibilities to the following plugins:
 * Added support for multiple comment forms per page and support for none default WordPress comment pages
 
 = 0.19.0 =
-* Added parameter newDom to callbacks onBeforeUpdateComments and onAfterUpdateComments, Fixed JavaScript errors
+* Added parameter newDom to callbacks OnBeforeUpdateComments and OnAfterUpdateComments, Fixed JavaScript errors
 
 = 0.18.1 =
 * Fixed double slashes in JavaScript include 
